@@ -1,0 +1,29 @@
+<ion-navbar *navbar primary>
+  <ion-title>
+    TODOS
+  </ion-title>
+</ion-navbar>
+
+<ion-content class="home">
+  <ion-list>
+    <ion-list-header>
+      Todos
+    </ion-list-header>
+    <ion-item-sliding *ngFor="#item of todos" #i>
+        <ion-item>
+          {{ item.name }}
+        </ion-item>
+        <ion-item-options>
+          <button danger (click)="deleteTodo(i)"><ion-icon name="trash"></ion-icon> Delete</button>
+          <button primary (click)="editTodo(item, i)"><ion-icon name="create"></ion-icon> Edit</button>
+        </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
+
+<ion-toolbar position="bottom">
+    <button full (click)="createTodo()">
+      <ion-icon name="create" ></ion-icon>
+      Create New Todo
+    </button>
+</ion-toolbar>
