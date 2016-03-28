@@ -1,4 +1,7 @@
 import {Page, Alert, NavController} from 'ionic-angular';
+import {Http} from 'angular2/http';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {Observable} from 'rxjs/Observable';
 
 @Page({
   templateUrl: 'build/pages/home/home.html'
@@ -11,8 +14,29 @@ export class HomePage {
 		{name: 'Todo 3', complete: true}
 	];
 
-	constructor(public nav: NavController){}
-	
+	list;
+    
+
+    tasks : FirebaseListObservable<any[]>;
+    
+    constructor(public http : Http, public af: AngularFire, public nav: NavController){
+        
+        this.tasks = af.list('/firebaseList');
+        
+    }   
+    
+    makeHttpRequest(){
+        
+        this.http.request("http://jsonplaceholder.typicode.com/posts").subscribe((res) => {
+            console.log(res.json())
+            
+            this.list = res.json();
+        }, (err) => {
+            console.log(err)
+        })
+        
+    }
+
 	createTodo(){
 
 		let createTodo = Alert.create({
